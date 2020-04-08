@@ -39,12 +39,13 @@
             this.cBForSale = new System.Windows.Forms.CheckBox();
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.lVCars = new System.Windows.Forms.ListView();
             this.regnr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.brand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.forSale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.year = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.model = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.forSale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnClear = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -62,7 +63,7 @@
             // lbYear
             // 
             this.lbYear.AutoSize = true;
-            this.lbYear.Location = new System.Drawing.Point(118, 16);
+            this.lbYear.Location = new System.Drawing.Point(236, 16);
             this.lbYear.Name = "lbYear";
             this.lbYear.Size = new System.Drawing.Size(17, 13);
             this.lbYear.TabIndex = 1;
@@ -80,7 +81,7 @@
             // lb
             // 
             this.lb.AutoSize = true;
-            this.lb.Location = new System.Drawing.Point(6, 55);
+            this.lb.Location = new System.Drawing.Point(118, 13);
             this.lb.Name = "lb";
             this.lb.Size = new System.Drawing.Size(37, 13);
             this.lb.TabIndex = 3;
@@ -95,29 +96,29 @@
             // 
             // tBModel
             // 
-            this.tBModel.Location = new System.Drawing.Point(121, 71);
+            this.tBModel.Location = new System.Drawing.Point(121, 74);
             this.tBModel.Name = "tBModel";
             this.tBModel.Size = new System.Drawing.Size(100, 20);
-            this.tBModel.TabIndex = 4;
+            this.tBModel.TabIndex = 3;
             // 
             // tBBrand
             // 
-            this.tBBrand.Location = new System.Drawing.Point(6, 71);
+            this.tBBrand.Location = new System.Drawing.Point(121, 32);
             this.tBBrand.Name = "tBBrand";
             this.tBBrand.Size = new System.Drawing.Size(100, 20);
             this.tBBrand.TabIndex = 2;
             // 
             // tBYear
             // 
-            this.tBYear.Location = new System.Drawing.Point(121, 32);
+            this.tBYear.Location = new System.Drawing.Point(239, 32);
             this.tBYear.Name = "tBYear";
             this.tBYear.Size = new System.Drawing.Size(100, 20);
-            this.tBYear.TabIndex = 2;
+            this.tBYear.TabIndex = 4;
             // 
             // cBForSale
             // 
             this.cBForSale.AutoSize = true;
-            this.cBForSale.Location = new System.Drawing.Point(227, 32);
+            this.cBForSale.Location = new System.Drawing.Point(239, 76);
             this.cBForSale.Name = "cBForSale";
             this.cBForSale.Size = new System.Drawing.Size(63, 17);
             this.cBForSale.TabIndex = 5;
@@ -126,7 +127,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(227, 68);
+            this.btnAdd.Location = new System.Drawing.Point(133, 100);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 6;
@@ -136,6 +137,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnSearch);
             this.groupBox1.Controls.Add(this.lbRegNr);
             this.groupBox1.Controls.Add(this.cBForSale);
             this.groupBox1.Controls.Add(this.btnAdd);
@@ -148,23 +150,34 @@
             this.groupBox1.Controls.Add(this.lbModel);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(339, 100);
+            this.groupBox1.Size = new System.Drawing.Size(353, 131);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lägg Till Bil";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(6, 70);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(100, 23);
+            this.btnSearch.TabIndex = 1;
+            this.btnSearch.Text = "Sök i registret";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // lVCars
             // 
             this.lVCars.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.regnr,
             this.brand,
-            this.forSale,
+            this.model,
             this.year,
-            this.model});
+            this.forSale});
+            this.lVCars.FullRowSelect = true;
             this.lVCars.HideSelection = false;
-            this.lVCars.Location = new System.Drawing.Point(12, 118);
+            this.lVCars.Location = new System.Drawing.Point(12, 149);
             this.lVCars.Name = "lVCars";
-            this.lVCars.Size = new System.Drawing.Size(339, 247);
+            this.lVCars.Size = new System.Drawing.Size(352, 283);
             this.lVCars.TabIndex = 12;
             this.lVCars.UseCompatibleStateImageBehavior = false;
             this.lVCars.View = System.Windows.Forms.View.Details;
@@ -178,6 +191,10 @@
             // 
             this.brand.Text = "Märke";
             // 
+            // forSale
+            // 
+            this.forSale.Text = "Till Salu";
+            // 
             // year
             // 
             this.year.DisplayIndex = 2;
@@ -188,14 +205,9 @@
             this.model.DisplayIndex = 3;
             this.model.Text = "Model";
             // 
-            // forSale
-            // 
-            this.forSale.DisplayIndex = 4;
-            this.forSale.Text = "Till Salu";
-            // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(12, 382);
+            this.btnClear.Location = new System.Drawing.Point(12, 438);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(135, 23);
             this.btnClear.TabIndex = 13;
@@ -205,7 +217,7 @@
             // 
             // btnRemove
             // 
-            this.btnRemove.Location = new System.Drawing.Point(216, 382);
+            this.btnRemove.Location = new System.Drawing.Point(216, 438);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(135, 23);
             this.btnRemove.TabIndex = 14;
@@ -217,7 +229,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 450);
+            this.ClientSize = new System.Drawing.Size(378, 470);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.lVCars);
@@ -251,6 +263,7 @@
         private System.Windows.Forms.ColumnHeader forSale;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnSearch;
     }
 }
 

@@ -112,5 +112,18 @@ namespace CarApp
         }
 
         #endregion HELPFUNCTIONS
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tBRegNr.Text))
+            {
+                string regNR = tBRegNr.Text.ToUpper();
+                //PrintData();
+            }
+            else
+            {
+                MessageBox.Show("Du måste ange ett registreringsnummer", "Inmatning saknas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
