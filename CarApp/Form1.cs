@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace CarApp
 {
-    public partial class Form1 : Form
+    public partial class Hallå : Form
     {
-        public Form1()
+        public Hallå()
         {
             InitializeComponent();
         }
@@ -34,7 +37,7 @@ namespace CarApp
             else
             {
                 ListViewItem item = CreateListViewItem(tBRegNr.Text, tBBrand.Text, tBModel.Text, tBYear.Text, cBForSale.Checked);
-                lVCars.Items.Add(item);
+                LVCars.Items.Add(item);
                 ClearTextBoxes();
             }
         }
@@ -45,17 +48,17 @@ namespace CarApp
         /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (lVCars.SelectedItems.Count > 0)
+            if (LVCars.SelectedItems.Count > 0)
             {
-                var item = lVCars.SelectedItems[0];
-                lVCars.Items.Remove(item);
+                var item = LVCars.SelectedItems[0];
+                LVCars.Items.Remove(item);
                 MessageBox.Show("bilen med registeringsnummer " + item.Text + " är borttagen", "Borttag av bil");
             }
             else
             {
                 MessageBox.Show("Ingen bil var markerad att tas bort", "Borttag av bil");
             }
-            btnClear.Enabled = (lVCars.Items.Count > 0);
+            btnClear.Enabled = (LVCars.Items.Count > 0);
         }
         /// <summary>
         /// Säkerställer att knappen "ta bort markerad bil" bara är tillgänglig när det verkligen finns en bil markerad
@@ -64,7 +67,7 @@ namespace CarApp
         /// <param name="e"></param>
         private void lVCars_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnRemove.Enabled = (lVCars.SelectedItems.Count > 0);
+            btnRemove.Enabled = (LVCars.SelectedItems.Count > 0);
         }
         /// <summary>
         /// Rensar bort alla bilar
@@ -73,7 +76,7 @@ namespace CarApp
         /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
-            lVCars.Clear();
+            LVCars.Clear();
         }
 
         #endregion EVENTS
@@ -93,9 +96,9 @@ namespace CarApp
         {
             ListViewItem item = new ListViewItem(regNr);
             item.SubItems.Add(brand);
-            item.SubItems.Add(forSale ? "Yes" : "No");
-            item.SubItems.Add(year);
             item.SubItems.Add(model);
+            item.SubItems.Add(year);
+            item.SubItems.Add(forSale ? "Yes" : "No");
             return item;
         }
         /// <summary>
@@ -117,12 +120,42 @@ namespace CarApp
         {
             if (!string.IsNullOrEmpty(tBRegNr.Text))
             {
-                string regNR = tBRegNr.Text.ToUpper();
-                //PrintData();
+                string regNr = tBRegNr.Text.ToUpper();
+                PrintData(regNr);
             }
             else
             {
                 MessageBox.Show("Du måste ange ett registreringsnummer", "Inmatning saknas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void PrintData(string regNr)
+        {
+
+            // https://api.biluppgifter.se/api/v1/vehicle/regno/XNF905?api_token=DtIAxcVeOZhJzLnC6LYN3BjwasJw2FIA5hdvgP00lNKw1cM53ddy1iWpll54
+
+            string token = "DtIAxcVeOZhJzLnC6LYN3BjwasJw2FIA5hdvgP00lNKw1cM53ddy1iWpll54";
+            string call = String.Format($"https://api.biluppgifter.se/api/v1/vehicle/regno/{regNr}?api_token={token}");
+
+            try
+            {
+                WebRequest request = HttpWebRequest.Create(call);
+
+                WebResponse response = request.GetResponse();
+
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                string carJSON = reader.ReadToEnd();
+
+                JObject jsonCar = JObject.Parse(carJSON);
+
+                tBBrand.Text = jsonCar["data"]["basic"]["data"]["make"].ToString();
+                tBYear.Text = jsonCar["data"]["basic"]["data"]["model_year"].ToString();
+                tBModel.Text = jsonCar["data"]["basic"]["data"]["model"].ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Bil med registeringsnummer {regNr} kunde inte hittas \n\n {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
