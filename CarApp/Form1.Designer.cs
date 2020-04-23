@@ -1,6 +1,6 @@
 ﻿namespace CarApp
 {
-    partial class Hallå
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -274,7 +274,7 @@
             this.btnRemove.UseVisualStyleBackColor = false;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
-            // Hallå
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -284,7 +284,7 @@
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.LVCars);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Hallå";
+            this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

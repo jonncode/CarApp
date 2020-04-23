@@ -16,7 +16,7 @@ namespace CarApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Hallå());
+            Application.Run(new Form1());
         }
     }
 }

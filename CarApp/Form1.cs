@@ -13,9 +13,10 @@ using Newtonsoft.Json.Linq;
 
 namespace CarApp
 {
-    public partial class Hallå : Form
+    public partial class Form1 : Form
     {
-        public Hallå()
+        Database dbObject = new Database();
+        public Form1()
         {
             InitializeComponent();
         }
@@ -36,9 +37,15 @@ namespace CarApp
             }
             else
             {
+                Car car = new Car(tBRegNr.Text, tBBrand.Text, tBModel.Text, Convert.ToInt32(tBYear.Text), cBForSale.Checked);
+
+                //Lägg till bilen i databasen
+                int result = dbObject.AddCarRow(car);
+                MessageBox.Show("Du har lagt till " + Convert.ToString(result) + " antal bilar");
                 ListViewItem item = CreateListViewItem(tBRegNr.Text, tBBrand.Text, tBModel.Text, tBYear.Text, cBForSale.Checked);
                 LVCars.Items.Add(item);
                 ClearTextBoxes();
+                btnClear.Enabled = true;
             }
         }
         /// <summary>
