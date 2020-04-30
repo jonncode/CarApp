@@ -24,6 +24,34 @@ namespace CarApp
             // Skapa dbConn, det objekt som håller förbindelsen med databasen
             dbConn = new SQLiteConnection("Data Source=" + databaseFilename);
         }
+
+        public List<Car> GetAllRowsFromCar()
+        {
+            string qSelect = "SELECT * FROM car; ";
+            List<Car> listOfCars = new List<Car>();
+
+            SQLiteCommand dbCommand = new SQLiteCommand(qSelect, dbConn);
+            OpenConnection();
+
+            SQLiteDataReader res = dbCommand.ExecuteReader(); //ett resultatset, vilket är en tvådimensionell array med värden.
+
+            if(res.HasRows)
+            {
+                while (res.Read()) {
+                    Car car = new Car(Convert.ToString(res["regNr"]),
+                        Convert.ToString(res["brand"]),
+                        Convert.ToString(res["model"]),
+                        Convert.ToInt32(res["year"]),
+                        Convert.ToBoolean(res["forSale"])
+                        );
+                    listOfCars.Add(car);
+                }
+            }
+            CloseConnection();
+
+            return listOfCars;
+        }
+
         /// <summary>
         /// Öppnar kopplingen till databasen
         /// Om dbConn inte är öppen så öppna dbConn
@@ -56,6 +84,22 @@ namespace CarApp
             dbCommand.Parameters.AddWithValue(@"year", car.GetYear());
             dbCommand.Parameters.AddWithValue(@"forSale", Convert.ToInt32(car.GetForSale()));
 
+            int result = dbCommand.ExecuteNonQuery();
+            CloseConnection();
+            return result;
+        }
+
+        public int RemoveCarRowByRegNr(string regNr)
+        {
+            string qDelete = "DELETE FROM car WHERE regNr = @regNr;";
+
+            SQLiteCommand dbCommand = new SQLiteCommand(qDelete, dbConn);
+            OpenConnection();
+
+            //kopplar parameter
+            dbCommand.Parameters.AddWithValue(@"regNr", regNr);
+
+            //Svaret är hur många rader som påverkas av "frågan" jag ställer
             int result = dbCommand.ExecuteNonQuery();
             CloseConnection();
             return result;

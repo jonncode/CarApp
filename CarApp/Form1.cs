@@ -19,6 +19,16 @@ namespace CarApp
         public Form1()
         {
             InitializeComponent();
+            InitListview();
+        }
+
+        private void InitListview()
+        {
+            List<Car> listOfCars = dbObject.GetAllRowsFromCar();
+            foreach (var car in listOfCars)
+            {
+                AddCarToListview(car);
+            }
         }
 
         #region EVENTS
@@ -42,12 +52,18 @@ namespace CarApp
                 //Lägg till bilen i databasen
                 int result = dbObject.AddCarRow(car);
                 MessageBox.Show("Du har lagt till " + Convert.ToString(result) + " antal bilar");
-                ListViewItem item = CreateListViewItem(tBRegNr.Text, tBBrand.Text, tBModel.Text, tBYear.Text, cBForSale.Checked);
-                LVCars.Items.Add(item);
+                AddCarToListview(car);
                 ClearTextBoxes();
                 btnClear.Enabled = true;
             }
         }
+
+        private void AddCarToListview(Car car)
+        {
+            ListViewItem item = CreateListViewItem(car.GetRegNr(), car.GetModel(), car.GetModel(), Convert.ToString(car.GetYear()), car.GetForSale());
+            lVCars.Items.Add(item);
+        }
+
         /// <summary>
         /// Tar bort en bil när användaren klickar på knappen "Ta bort markerad bil"
         /// </summary>
@@ -55,17 +71,24 @@ namespace CarApp
         /// <param name="e"></param>
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (LVCars.SelectedItems.Count > 0)
+            int res = dbObject.RemoveCarRowByRegNr(lVCars.SelectedItems[0].Text);
+            MessageBox.Show("Du har tagit bort " + Convert.ToString(res) + " antal bilar från databasen.");
+
+            if(res > 0)
             {
-                var item = LVCars.SelectedItems[0];
-                LVCars.Items.Remove(item);
-                MessageBox.Show("bilen med registeringsnummer " + item.Text + " är borttagen", "Borttag av bil");
+                if (lVCars.SelectedItems.Count > 0)
+                {
+                    var item = lVCars.SelectedItems[0];
+                    lVCars.Items.Remove(item);
+                    MessageBox.Show("bilen med registeringsnummer " + item.Text + " är borttagen", "Borttag av bil");
+                }
+                else
+                {
+                    MessageBox.Show("Ingen bil var markerad att tas bort", "Borttag av bil");
+                }
             }
-            else
-            {
-                MessageBox.Show("Ingen bil var markerad att tas bort", "Borttag av bil");
-            }
-            btnClear.Enabled = (LVCars.Items.Count > 0);
+            btnClear.Enabled = (lVCars.Items.Count > 0);
+
         }
         /// <summary>
         /// Säkerställer att knappen "ta bort markerad bil" bara är tillgänglig när det verkligen finns en bil markerad
@@ -74,7 +97,7 @@ namespace CarApp
         /// <param name="e"></param>
         private void lVCars_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnRemove.Enabled = (LVCars.SelectedItems.Count > 0);
+            btnRemove.Enabled = (lVCars.SelectedItems.Count > 0);
         }
         /// <summary>
         /// Rensar bort alla bilar
@@ -83,7 +106,7 @@ namespace CarApp
         /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
-            LVCars.Clear();
+            lVCars.Clear();
         }
 
         #endregion EVENTS

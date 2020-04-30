@@ -40,7 +40,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.LVCars = new System.Windows.Forms.ListView();
+            this.lVCars = new System.Windows.Forms.ListView();
             this.regnr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.brand = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.forSale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -200,29 +200,29 @@
             this.btnSearch.UseVisualStyleBackColor = false;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // LVCars
+            // lVCars
             // 
-            this.LVCars.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lVCars.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LVCars.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.LVCars.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lVCars.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lVCars.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.regnr,
             this.brand,
             this.model,
             this.year,
             this.forSale});
-            this.LVCars.ForeColor = System.Drawing.Color.White;
-            this.LVCars.FullRowSelect = true;
-            this.LVCars.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.LVCars.HideSelection = false;
-            this.LVCars.Location = new System.Drawing.Point(12, 149);
-            this.LVCars.Name = "LVCars";
-            this.LVCars.Size = new System.Drawing.Size(352, 283);
-            this.LVCars.TabIndex = 12;
-            this.LVCars.UseCompatibleStateImageBehavior = false;
-            this.LVCars.View = System.Windows.Forms.View.Details;
-            this.LVCars.SelectedIndexChanged += new System.EventHandler(this.lVCars_SelectedIndexChanged);
+            this.lVCars.ForeColor = System.Drawing.Color.White;
+            this.lVCars.FullRowSelect = true;
+            this.lVCars.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lVCars.HideSelection = false;
+            this.lVCars.Location = new System.Drawing.Point(12, 149);
+            this.lVCars.Name = "lVCars";
+            this.lVCars.Size = new System.Drawing.Size(352, 283);
+            this.lVCars.TabIndex = 12;
+            this.lVCars.UseCompatibleStateImageBehavior = false;
+            this.lVCars.View = System.Windows.Forms.View.Details;
+            this.lVCars.SelectedIndexChanged += new System.EventHandler(this.lVCars_SelectedIndexChanged);
             // 
             // regnr
             // 
@@ -282,7 +282,7 @@
             this.ClientSize = new System.Drawing.Size(378, 470);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.LVCars);
+            this.Controls.Add(this.lVCars);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -305,7 +305,7 @@
         private System.Windows.Forms.CheckBox cBForSale;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView LVCars;
+        private System.Windows.Forms.ListView lVCars;
         private System.Windows.Forms.ColumnHeader regnr;
         private System.Windows.Forms.ColumnHeader brand;
         private System.Windows.Forms.ColumnHeader year;
